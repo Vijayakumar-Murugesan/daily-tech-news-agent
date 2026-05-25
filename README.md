@@ -193,57 +193,6 @@ llm.model=llama-3.1-70b-versatile   # More powerful
 
 ---
 
-## 🎤 Demo Explanation Script (20–30 minutes)
-
-### Introduction (5 min)
-> "Today we're building an AI Agent — not just calling an API, but an autonomous
-> pipeline that uses multiple tools, makes decisions, and produces structured output.
->
-> Think of it like a human researcher:
-> 1. **Gather** → Fetch data from multiple sources
-> 2. **Process** → Filter duplicates, categorize, rank by relevance
-> 3. **Synthesize** → Use AI to write clear summaries
-> 4. **Present** → Return structured, user-ready results
->
-> That's what our agent does, but 100x faster."
-
-### Architecture Walkthrough (5 min)
-Point to `NewsAgentService.java`:
-> "This is the orchestrator — the central 'brain'. It coordinates 3 specialized services.
-> Each does ONE thing well. This is the **agent pattern**: coordination + experts.
->
-> Unlike traditional code where you control flow, an agent delegates work and
-> composes results intelligently."
-
-Walk through the 4 steps, show each service file.
-
-### The Prompt Engineering Section (5 min) ← MOST IMPORTANT
-Open `LlmSummarizerService.java`, show `buildPrompt()`:
-> "THIS is where the magic happens. This prompt is the complete specification.
-> Notice the pattern:
->
-> 1. **Role assignment** — 'You are an expert tech journalist'
-> 2. **Structured input** — title, source, category, description injected
-> 3. **Strict output format** — we demand JSON so we can parse it reliably
-> 4. **Guardrails** — 'under 150 chars', 'no hype words', clear rules
->
-> Prompt engineering is a **skill**. Better prompts = better outputs.
-> Bad prompts = hallucinations and unparseable responses."
-
-### Multi-Provider Pattern (3 min)
-> "Notice: we support Groq, Gemini, AND OpenAI from the same code.
-> The `summarizeWithLLM()` method dispatches to provider-specific implementations.
->
-> This is good **software architecture**: abstractions over specifics.
-> In production, you can switch providers without rewriting business logic."
-
-### Live Demo (5 min)
-1. Click Generate
-2. Show the loading logs: "Fetching 17 feeds..."
-3. Show processing: "Deduplication → Ranking..."
-4. Show LLM calls: "Summarizing with [Groq/Gemini/OpenAI]..."
-5. Show final cards with AI summaries, category badges, time-to-fetch
-
 ### Fallback Graceful Degradation (2 min)
 Remove/invalidate API key → regenerate:
 > "Production systems must handle LLM unavailability. Watch: agent still works,
